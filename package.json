@@ -1,0 +1,38 @@
+{
+  "name": "starter-clone",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "reset": "git remote rm origin",
+    "build:solidity": "npx hardhat compile",
+    "build:js": "node_modules/.bin/webpack",
+    "build": "npm run build:solidity && npm run build:js",
+    "test": "npx hardhat test",
+    "deploy:solidity-localhost": "npx hardhat deploy --network localhost",
+    "deploy:solidity-rinkeby": "npx hardhat deploy --network rinkeby",
+    "deploy:solidity-mainnet": "npx hardhat deploy --network mainnet",
+    "deploy:localhost": "npm run build:solidity && npm run deploy:solidity-localhost",
+    "deploy:rinkeby": "npm run build:solidity && npm run deploy:solidity-rinkeby",
+    "deploy:mainnet": "npm run build:solidity && npm run deploy:solidity-mainnet"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts": "^4.3.2",
+    "@openzeppelin/contracts-upgradeable": "^4.3.2",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.4.7",
+    "hardhat": "^2.6.6",
+    "hardhat-abi-exporter": "^2.3.0",
+    "hardhat-contract-sizer": "^2.1.1",
+    "hardhat-gas-reporter": "^1.0.6"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-etherscan": "^2.1.8",
+    "dotenv": "^10.0.0"
+  }
+}
