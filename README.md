@@ -4,7 +4,7 @@
 
 Learn more: https://stream.moneypipe.xyz
 
-![pipe.png](pipe_poster.png)
+![stream.png](stream.png)
 
 ---
 
