@@ -3,13 +3,12 @@ pragma solidity ^0.8.4;
 //import 'hardhat/console.sol';
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 contract Stream is Initializable {
-  event Stored(address src);
+  Member[] private _members;
   struct Member {
     address account;
     uint32 value;
     uint32 total;
   }
-  Member[] private _members;
   function initialize(Member[] calldata m) initializer public {
     for(uint i=0; i<m.length; i++) {
       _members.push(m[i]);
