@@ -1,5 +1,10 @@
 [
   {
+    "inputs": [],
+    "name": "TransferFailed",
+    "type": "error"
+  },
+  {
     "inputs": [
       {
         "components": [
