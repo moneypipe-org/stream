@@ -14,7 +14,9 @@
     "deploy:solidity-mainnet": "npx hardhat deploy --network mainnet",
     "deploy:localhost": "npm run build:solidity && npm run deploy:solidity-localhost",
     "deploy:rinkeby": "npm run build:solidity && npm run deploy:solidity-rinkeby",
-    "deploy:mainnet": "npm run build:solidity && npm run deploy:solidity-mainnet"
+    "deploy:mainnet": "npm run build:solidity && npm run deploy:solidity-mainnet",
+    "verify:rinkeby": "npx hardhat v --network rinkeby",
+    "verify:mainnet": "npx hardhat v --network mainnet"
   },
   "author": "",
   "license": "ISC",
