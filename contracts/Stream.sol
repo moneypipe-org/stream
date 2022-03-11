@@ -27,13 +27,13 @@ contract Stream is Initializable {
     uint32 total;
   }
   function initialize(Member[] calldata m) initializer public {
-    for(uint i=0; i<m.length; i++) {
+    for(uint i=0; i<m.length; ++i) {
       _members.push(m[i]);
     }
   }
   receive () external payable {
     require(_members.length > 0, "1");
-    for(uint i=0; i<_members.length; i++) {
+    for(uint i=0; i<_members.length; ++i) {
       Member memory member = _members[i];
       _transfer(member.account, msg.value * member.value / member.total);
     }
