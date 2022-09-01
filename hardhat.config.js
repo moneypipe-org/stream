@@ -11,6 +11,7 @@ require('hardhat-contract-sizer');
 require("@nomiclabs/hardhat-etherscan");
 task("deploy", "deploys the contract", async (args, hre) => {
   const [deployer] = await hre.ethers.getSigners();
+  console.log("deploying contracts with the account:", deployer.address);
   let Factory = await hre.ethers.getContractFactory('Factory');
   let factory = await Factory.deploy();
   await factory.deployed();
