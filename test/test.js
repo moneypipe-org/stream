@@ -22,7 +22,7 @@ const deploy = async () => {
   let Factory = await ethers.getContractFactory('Factory');
   let factory = await Factory.deploy();
   await factory.deployed();
-  await fs.promises.mkdir(path.resolve(__dirname, "../deployments"), { recursive: true }).catch((e) => {})
+  await fs.promises.mkdir(path.resolve(__dirname, "../deployments"), { recursive: true }).catch((e) => { })
   await fs.promises.writeFile(path.resolve(__dirname, "../deployments/test.json"), JSON.stringify({ address: factory.address }))
   return factory;
 }
@@ -59,7 +59,7 @@ const getBalance = async () => {
   }
 }
 var factory
-describe("stream", function() {
+describe("stream", function () {
   beforeEach(async () => {
 
     // reset blockchain every time

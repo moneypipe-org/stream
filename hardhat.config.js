@@ -15,7 +15,7 @@ task("deploy", "deploys the contract", async (args, hre) => {
   let factory = await Factory.deploy();
   await factory.deployed();
   console.log("factory address", factory.address);
-  await fs.promises.mkdir(path.resolve(__dirname, "./deployments"), { recursive: true }).catch((e) => {})
+  await fs.promises.mkdir(path.resolve(__dirname, "./deployments"), { recursive: true }).catch((e) => { })
   await fs.promises.writeFile(path.resolve(__dirname, `./deployments/${hre.network.name}.json`), JSON.stringify({ address: factory.address }))
   return factory;
 })
@@ -47,8 +47,8 @@ task("v", "verify on etherscan", async (args, hre) => {
 module.exports = {
   gasReporter: {
     currency: "USD",
-//    gasPrice: 80,
-//    gasPrice: 150,
+    //    gasPrice: 80,
+    //    gasPrice: 150,
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     enabled: true,
   },
