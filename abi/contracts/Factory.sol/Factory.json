@@ -37,6 +37,11 @@
         "type": "string"
       },
       {
+        "internalType": "address",
+        "name": "_fallback",
+        "type": "address"
+      },
+      {
         "components": [
           {
             "internalType": "address",

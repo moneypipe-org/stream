@@ -15,13 +15,13 @@ contract Factory {
         implementation = address(new Stream());
     }
 
-    function genesis(string calldata title, Stream.Member[] calldata members)
+    function genesis(string calldata title, address _fallback, Stream.Member[] calldata members)
         external
         returns (address)
     {
         address payable clone = payable(Clones.clone(implementation));
         Stream s = Stream(clone);
-        s.initialize(members);
+        s.initialize(members, _fallback);
         emit ContractDeployed(msg.sender, clone, title);
         return clone;
     }
