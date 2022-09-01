@@ -47,23 +47,14 @@ contract Stream is Initializable {
             Member memory member = _members[i];
 
             // IMPORTANT: ignores failed transfers, collects in fallback
-            bool isSuccess = _transfer(
+            _transfer(
                 member.account,
                 (msg.value * member.value) / member.total
             );
-
-            // if (isSuccess) {
-            //     msgValue -= (msg.value * member.value) / member.total;
-            // }
         }
 
         // failed transfers are accumulated and sent to fallback
-        bool _isSuccess = _transfer(_fallback, address(this).balance);
-
-        console.log("is success", _isSuccess);
-
-        console.log("balance is", address(this).balance);
-        // console.log("balance is", msgValue);
+        _transfer(_fallback, address(this).balance);
     }
 
     function members() external view returns (Member[] memory) {
@@ -86,7 +77,7 @@ contract Stream is Initializable {
         assembly {
             callStatus := call(c, to, amount, 0, 0, 0, 0)
         }
-        // if (!callStatus) revert TransferFailed();
+        console.log("transfer", to, amount, callStatus ? "success" : "fail");
         return callStatus;
     }
 
