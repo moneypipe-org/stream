@@ -83,6 +83,7 @@ contract Stream is Initializable {
 
     function setHardCap(uint c) external {
         require(msg.sender == _fallback, "only fallback receiver can set hard cap");
+        require(c > 50_000, "hard cap must be greater than 50k");
         _cap = c;
     }
 
