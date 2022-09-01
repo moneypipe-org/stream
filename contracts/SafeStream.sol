@@ -18,10 +18,11 @@
 //
 /////////////////////////////////////////////////////////////////////////////////////
 pragma solidity ^0.8.4;
+
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 import "hardhat/console.sol";
 
-contract Stream is Initializable {
+contract SafeStream is Initializable {
     Member[] private _members;
     address private _fallback;
     uint private _cap;

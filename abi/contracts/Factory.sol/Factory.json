@@ -59,7 +59,7 @@
             "type": "uint32"
           }
         ],
-        "internalType": "struct Stream.Member[]",
+        "internalType": "struct SafeStream.Member[]",
         "name": "members",
         "type": "tuple[]"
       }

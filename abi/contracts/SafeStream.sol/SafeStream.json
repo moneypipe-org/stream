@@ -1,0 +1,102 @@
+[
+  {
+    "inputs": [],
+    "name": "TransferFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "f",
+        "type": "address"
+      }
+    ],
+    "name": "changeFallback",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "value",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "total",
+            "type": "uint32"
+          }
+        ],
+        "internalType": "struct SafeStream.Member[]",
+        "name": "m",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "address",
+        "name": "f",
+        "type": "address"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "members",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "internalType": "uint32",
+            "name": "value",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "total",
+            "type": "uint32"
+          }
+        ],
+        "internalType": "struct SafeStream.Member[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "c",
+        "type": "uint256"
+      }
+    ],
+    "name": "setHardCap",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  }
+]

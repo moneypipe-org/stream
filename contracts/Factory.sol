@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/proxy/Clones.sol";
-import "./Stream.sol";
+import "./SafeStream.sol";
 
 contract Factory {
     event ContractDeployed(
@@ -12,15 +12,15 @@ contract Factory {
     address public immutable implementation;
 
     constructor() {
-        implementation = address(new Stream());
+        implementation = address(new SafeStream());
     }
 
-    function genesis(string calldata title, address _fallback, Stream.Member[] calldata members)
+    function genesis(string calldata title, address _fallback, SafeStream.Member[] calldata members)
         external
         returns (address)
     {
         address payable clone = payable(Clones.clone(implementation));
-        Stream s = Stream(clone);
+        SafeStream s = SafeStream(clone);
         s.initialize(members, _fallback);
         emit ContractDeployed(msg.sender, clone, title);
         return clone;

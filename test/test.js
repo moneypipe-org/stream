@@ -47,7 +47,7 @@ const clone = async (desc, members) => {
   let events = await globalLogs(factory.address)
   let address = events[0].group
 
-  let ABI = require(path.resolve(__dirname, "../abi/contracts/Stream.sol/Stream.json"))
+  let ABI = require(path.resolve(__dirname, "../abi/contracts/SafeStream.sol/SafeStream.json"))
   stream = new ethers.Contract(address, ABI, ethers.provider.getSigner())
 
 }
