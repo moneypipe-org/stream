@@ -12,7 +12,7 @@ require("hardhat-gas-reporter");
 require('hardhat-contract-sizer');
 require("@nomiclabs/hardhat-etherscan");
 
-require("./scripts/upload");
+require("@buildship/hardhat-ipfs-upload");
 
 task("deploy", "deploys the contract", async (args, hre) => {
   const [deployer] = await hre.ethers.getSigners();
