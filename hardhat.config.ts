@@ -1,12 +1,8 @@
+import "dotenv/config";
+import "@nomiclabs/hardhat-waffle";
+import fs from 'fs';
+import path from 'path';
 import { task } from "hardhat/config";
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
-const fs = require('fs')
-const path = require('path')
-require('dotenv').config()
-require('@nomiclabs/hardhat-waffle')
 require('hardhat-abi-exporter');
 require("hardhat-gas-reporter");
 require('hardhat-contract-sizer');
