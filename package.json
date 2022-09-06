@@ -31,7 +31,10 @@
     "hardhat": "^2.6.6",
     "hardhat-abi-exporter": "^2.3.0",
     "hardhat-contract-sizer": "^2.1.1",
-    "hardhat-gas-reporter": "^1.0.6"
+    "hardhat-gas-reporter": "^1.0.6",
+    "minimist": "^1.2.6",
+    "nft.storage": "^7.0.0",
+    "ts-node": "^10.9.1"
   },
   "dependencies": {
     "@nomiclabs/hardhat-etherscan": "^2.1.8",

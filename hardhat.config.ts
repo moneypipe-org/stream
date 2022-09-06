@@ -1,3 +1,5 @@
+import { task } from "hardhat/config";
+
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
@@ -9,6 +11,9 @@ require('hardhat-abi-exporter');
 require("hardhat-gas-reporter");
 require('hardhat-contract-sizer');
 require("@nomiclabs/hardhat-etherscan");
+
+require("./scripts/upload");
+
 task("deploy", "deploys the contract", async (args, hre) => {
   const [deployer] = await hre.ethers.getSigners();
   console.log("deploying contracts with the account:", deployer.address);
@@ -16,7 +21,7 @@ task("deploy", "deploys the contract", async (args, hre) => {
   let factory = await Factory.deploy();
   await factory.deployed();
   console.log("factory address", factory.address);
-  await fs.promises.mkdir(path.resolve(__dirname, "./deployments"), { recursive: true }).catch((e) => { })
+  await fs.promises.mkdir(path.resolve(__dirname, "./deployments"), { recursive: true }).catch((e: any) => { })
   await fs.promises.writeFile(path.resolve(__dirname, `./deployments/${hre.network.name}.json`), JSON.stringify({ address: factory.address }))
   return factory;
 })
@@ -33,8 +38,8 @@ task("v", "verify on etherscan", async (args, hre) => {
   } catch (e) {
     console.log("already verified")
   }
-  const [deployer] = await ethers.getSigners();
-  let contract = new ethers.Contract(factoryAddress, FACTORY_ABI, deployer)
+  const [deployer] = await hre.ethers.getSigners();
+  let contract = new hre.ethers.Contract(factoryAddress, FACTORY_ABI, deployer)
   let implementation = await contract.implementation()
   console.log("verify implementation", implementation)
   try {
