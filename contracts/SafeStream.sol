@@ -72,6 +72,7 @@ contract SafeStream is Initializable {
 
     // adopted from https://github.com/lexDAO/Kali/blob/main/contracts/libraries/SafeTransferLib.sol
     error TransferFailed();
+
     function _transfer(address to, uint256 amount) internal returns (bool) {
         bool callStatus;
         uint256 c = _calculateGasCap();
@@ -82,14 +83,20 @@ contract SafeStream is Initializable {
         return callStatus;
     }
 
-    function setHardCap(uint c) external {
-        require(msg.sender == _fallback, "only fallback receiver can set hard cap");
+    function setHardGasCap(uint c) external {
+        require(
+            msg.sender == _fallback,
+            "only fallback receiver can set hard cap"
+        );
         require(c > 50_000, "hard cap must be greater than 50k");
         _cap = c;
     }
 
     function changeFallback(address f) external {
-        require(msg.sender == f, "only the fallback receiver can change the fallback receiver");
+        require(
+            msg.sender == f,
+            "only the fallback receiver can change the fallback receiver"
+        );
         _fallback = f;
     }
 }
