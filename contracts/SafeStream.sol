@@ -38,6 +38,19 @@ contract SafeStream is Initializable {
             _members.push(m[i]);
         }
 
+        // check that each member.total equals to sum of member.value
+        uint32 total = 0;
+        for (uint i = 0; i < _members.length; i++) {
+            total += _members[i].value;
+        }
+
+        // check that total is not zero
+        require(total > 0, "total is zero");
+
+        for (uint i = 0; i < _members.length; i++) {
+            require(_members[i].total == total, "total is not equal");
+        }
+
         _fallback = f;
     }
 
