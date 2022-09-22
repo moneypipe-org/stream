@@ -75,6 +75,27 @@ contract SafeStream is Initializable {
         return _members;
     }
 
+    function membersList() external view returns (string[] memory member_info) {
+        // read all members and return as string array
+        member_info = new string[](_members.length);
+
+        for (uint i = 0; i < _members.length; i++) {
+            Member memory member = _members[i];
+
+            member_info[i] = string(
+                abi.encodePacked(
+                    member.account,
+                    ": ",
+                    member.value,
+                    " of ",
+                    (member.total)
+                )
+            );
+        }
+
+        return member_info;
+    }
+
     function _calculateGasCap() internal view returns (uint) {
         if (_cap != 0) {
             return _cap;

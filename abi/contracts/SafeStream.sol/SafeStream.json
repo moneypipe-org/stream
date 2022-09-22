@@ -83,6 +83,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "membersList",
+    "outputs": [
+      {
+        "internalType": "string[]",
+        "name": "member_info",
+        "type": "string[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
