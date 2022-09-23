@@ -122,7 +122,7 @@ contract SafeStream is Initializable {
                     Strings.toHexString(uint160(member.account), 20),
                     ": ",
                     Strings.toString(member.value),
-                    " of ",
+                    "/",
                     Strings.toString(member.total)
                 )
             );
