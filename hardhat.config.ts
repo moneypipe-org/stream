@@ -79,6 +79,11 @@ module.exports = {
       timeout: 1000 * 60 * 60 * 24, // 1 day
       accounts: [process.env.RINKEBY_PRIVATE_KEY],
     },
+    goerli: {
+      url: process.env.GOERLI,
+      timeout: 1000 * 60 * 60 * 24, // 1 day
+      accounts: [process.env.GOERLI_PRIVATE_KEY],
+    },
     mainnet: {
       gasPrice: 77000000000,
       timeout: 1000 * 60 * 60 * 24, // 1 day
