@@ -121,9 +121,9 @@ contract SafeStream is Initializable {
                 abi.encodePacked(
                     Strings.toHexString(uint160(member.account), 20),
                     ": ",
-                    member.value,
+                    Strings.toString(member.value),
                     " of ",
-                    (member.total)
+                    Strings.toString(member.total)
                 )
             );
         }
