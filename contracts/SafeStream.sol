@@ -54,6 +54,7 @@
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 import "hardhat/console.sol";
 
 contract SafeStream is Initializable {
@@ -118,7 +119,7 @@ contract SafeStream is Initializable {
 
             member_info[i] = string(
                 abi.encodePacked(
-                    member.account,
+                    Strings.toHexString(uint160(member.account), 20),
                     ": ",
                     member.value,
                     " of ",
