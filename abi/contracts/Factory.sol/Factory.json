@@ -37,6 +37,11 @@
         "type": "string"
       },
       {
+        "internalType": "address",
+        "name": "_fallback",
+        "type": "address"
+      },
+      {
         "components": [
           {
             "internalType": "address",
@@ -54,7 +59,7 @@
             "type": "uint32"
           }
         ],
-        "internalType": "struct Stream.Member[]",
+        "internalType": "struct SafeStream.Member[]",
         "name": "members",
         "type": "tuple[]"
       }

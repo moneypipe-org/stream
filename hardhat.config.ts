@@ -1,21 +1,23 @@
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
-const fs = require('fs')
-const path = require('path')
-require('dotenv').config()
-require('@nomiclabs/hardhat-waffle')
+import "dotenv/config";
+import "@nomiclabs/hardhat-waffle";
+import fs from 'fs';
+import path from 'path';
+import { task } from "hardhat/config";
 require('hardhat-abi-exporter');
 require("hardhat-gas-reporter");
 require('hardhat-contract-sizer');
 require("@nomiclabs/hardhat-etherscan");
+
+require("@buildship/hardhat-ipfs-upload");
+
 task("deploy", "deploys the contract", async (args, hre) => {
   const [deployer] = await hre.ethers.getSigners();
+  console.log("deploying contracts with the account:", deployer.address);
   let Factory = await hre.ethers.getContractFactory('Factory');
   let factory = await Factory.deploy();
   await factory.deployed();
   console.log("factory address", factory.address);
-  await fs.promises.mkdir(path.resolve(__dirname, "./deployments"), { recursive: true }).catch((e) => {})
+  await fs.promises.mkdir(path.resolve(__dirname, "./deployments"), { recursive: true }).catch((e: any) => { })
   await fs.promises.writeFile(path.resolve(__dirname, `./deployments/${hre.network.name}.json`), JSON.stringify({ address: factory.address }))
   return factory;
 })
@@ -32,8 +34,8 @@ task("v", "verify on etherscan", async (args, hre) => {
   } catch (e) {
     console.log("already verified")
   }
-  const [deployer] = await ethers.getSigners();
-  let contract = new ethers.Contract(factoryAddress, FACTORY_ABI, deployer)
+  const [deployer] = await hre.ethers.getSigners();
+  let contract = new hre.ethers.Contract(factoryAddress, FACTORY_ABI, deployer)
   let implementation = await contract.implementation()
   console.log("verify implementation", implementation)
   try {
@@ -47,17 +49,17 @@ task("v", "verify on etherscan", async (args, hre) => {
 module.exports = {
   gasReporter: {
     currency: "USD",
-//    gasPrice: 80,
-//    gasPrice: 150,
+    //    gasPrice: 80,
+    //    gasPrice: 150,
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     enabled: true,
   },
   solidity: {
-    version: "0.8.4",
+    version: "0.8.16",
     settings: {
       optimizer: {
         enabled: true,
-        runs: 1000,
+        runs: 10_000,
       },
     }
   },
@@ -76,6 +78,11 @@ module.exports = {
       url: process.env.RINKEBY,
       timeout: 1000 * 60 * 60 * 24, // 1 day
       accounts: [process.env.RINKEBY_PRIVATE_KEY],
+    },
+    goerli: {
+      url: process.env.GOERLI,
+      timeout: 1000 * 60 * 60 * 24, // 1 day
+      accounts: [process.env.GOERLI_PRIVATE_KEY],
     },
     mainnet: {
       gasPrice: 77000000000,

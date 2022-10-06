@@ -1,6 +1,6 @@
 const { expect } = require("chai");
 const { network, ethers } = require("hardhat");
-var signers, addresses, deployer, alice, bob
+var signers, addresses, deployer, alice, bob, carol, broken, factory, stream;
 const fs = require('fs');
 const path = require('path');
 const globalLogs = async (factoryAddress) => {
@@ -22,7 +22,7 @@ const deploy = async () => {
   let Factory = await ethers.getContractFactory('Factory');
   let factory = await Factory.deploy();
   await factory.deployed();
-  await fs.promises.mkdir(path.resolve(__dirname, "../deployments"), { recursive: true }).catch((e) => {})
+  await fs.promises.mkdir(path.resolve(__dirname, "../deployments"), { recursive: true }).catch((e) => { })
   await fs.promises.writeFile(path.resolve(__dirname, "../deployments/test.json"), JSON.stringify({ address: factory.address }))
   return factory;
 }
@@ -33,14 +33,21 @@ const deployTest = async () => {
   await test.deployed();
   return test;
 }
+const deployBroken = async () => {
+  const [deployer] = await ethers.getSigners();
+  let Broken = await ethers.getContractFactory('Broken');
+  let broken = await Broken.deploy();
+  await broken.deployed();
+  return broken;
+}
 const clone = async (desc, members) => {
-  let tx = await factory.genesis(desc, members)
+  let tx = await factory.genesis(desc, deployer.address, members)
   await tx.wait()
 
   let events = await globalLogs(factory.address)
   let address = events[0].group
 
-  let ABI = require(path.resolve(__dirname, "../abi/contracts/Stream.sol/Stream.json"))
+  let ABI = require(path.resolve(__dirname, "../abi/contracts/SafeStream.sol/SafeStream.json"))
   stream = new ethers.Contract(address, ABI, ethers.provider.getSigner())
 
 }
@@ -48,18 +55,20 @@ const getBalance = async () => {
   const aliceB = await ethers.provider.getBalance(alice.address)
   const bobB = await ethers.provider.getBalance(bob.address)
   const carolB = await ethers.provider.getBalance(carol.address)
+  const brokenB = await ethers.provider.getBalance(broken.address)
   const deployerB = await ethers.provider.getBalance(deployer.address)
   const contractB = await ethers.provider.getBalance(stream.address)
   return {
     alice: ethers.utils.formatEther(aliceB),
     bob: ethers.utils.formatEther(bobB),
     carol: ethers.utils.formatEther(carolB),
+    broken: ethers.utils.formatEther(brokenB),
     deployer: ethers.utils.formatEther(deployerB),
     contract: ethers.utils.formatEther(contractB)
   }
 }
 var factory
-describe("stream", function() {
+describe("stream", function () {
   beforeEach(async () => {
 
     // reset blockchain every time
@@ -76,6 +85,8 @@ describe("stream", function() {
     alice = signers[1]
     bob = signers[2]
     carol = signers[3]
+
+    broken = await deployBroken()
 
     factory = await deploy()
 
@@ -194,5 +205,49 @@ describe("stream", function() {
 
     tx = test.withdrawSuccess(stream.address)
     await expect(tx).not.to.be.reverted
+  })
+
+  it("should not fail if one of receivers is broken smartcontract", async () => {
+    let test = await deployTest()
+    let beforeBalance = await getBalance()
+
+    let tx = await deployer.sendTransaction({
+      to: test.address,
+      value: ethers.utils.parseEther("1000")
+    });
+
+    await clone("alice, bob, broken", [{
+      account: alice.address,
+      value: "" + 1 * 100,
+      total: 1000
+    }, {
+      account: bob.address,
+      value: "" + 2 * 100,
+      total: 1000
+    }, {
+      account: broken.address,
+      value: "" + 7 * 100,
+      total: 1000
+    }])
+
+    tx = test.withdrawSuccess(stream.address)
+    await expect(tx).not.to.be.reverted
+
+    // check that the broken contract is not used
+    let afterBalance = await getBalance()
+    expect(afterBalance.alice).to.equal('10100.0')
+    expect(afterBalance.bob).to.equal('10200.0')
+    expect(afterBalance.broken).to.equal('0.0')
+
+    // check that contract doesn't keep money in the contract
+    expect(afterBalance.contract).to.equal('0.0')
+
+    // check deployerAddress has receiver extra money
+    expect(
+      (afterBalance.deployer - beforeBalance.deployer).toFixed(1)
+    ).to.equal(
+      (700 - 1000).toFixed(1)
+    )
+
   })
 });

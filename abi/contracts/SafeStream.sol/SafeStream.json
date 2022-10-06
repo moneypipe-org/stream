@@ -37,7 +37,7 @@
             "type": "uint32"
           }
         ],
-        "internalType": "struct Stream.Member[]",
+        "internalType": "struct SafeStream.Member[]",
         "name": "m",
         "type": "tuple[]"
       },
@@ -74,9 +74,22 @@
             "type": "uint32"
           }
         ],
-        "internalType": "struct Stream.Member[]",
+        "internalType": "struct SafeStream.Member[]",
         "name": "",
         "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "membersList",
+    "outputs": [
+      {
+        "internalType": "string[]",
+        "name": "member_info",
+        "type": "string[]"
       }
     ],
     "stateMutability": "view",
@@ -90,7 +103,7 @@
         "type": "uint256"
       }
     ],
-    "name": "setHardCap",
+    "name": "setHardGasCap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
